@@ -22,6 +22,36 @@ This project gives users a dark, modern chatbot interface with:
 
 The assistant always tries to use your trusted data first. If the answer is not confidently available in the FAQ or uploaded knowledge, hybrid mode can use Groq to produce a more natural answer with retrieved context.
 
+## Screenshots
+
+### Authentication
+
+**Login Page**
+
+![Login Page](screenshots/login-page.png)
+
+**Signup Page**
+
+![Signup Page](screenshots/signup-page.png)
+
+### Main Interface
+
+**Dashboard UI**
+
+![Dashboard UI](screenshots/dashboard-ui.png)
+
+**Chat History Sidebar**
+
+![Chat History Sidebar](screenshots/chat-history.png)
+
+**AI Response View**
+
+![AI Response View](screenshots/ai-response.png)
+
+**Mode Selection**
+
+![Mode Selection](screenshots/model-selection.png)
+
 ## Key Features
 
 - `Authentication system`
@@ -278,4 +308,3 @@ Possible next upgrades include:
 ## Author
 
 Built as a hybrid intelligent AI assistant project with retrieval, document grounding, voice interaction, authentication, and modern chat UX.
-
