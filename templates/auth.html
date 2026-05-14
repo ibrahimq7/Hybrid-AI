@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ "Create Account" if mode == "signup" else "Login" }} | Hybrid AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="auth-body">
+    <main class="auth-shell">
+        <section class="auth-showcase" aria-label="Hybrid AI assistant preview">
+            <div class="brand auth-brand">
+                <img src="{{ url_for('static', filename='logo.svg') }}" alt="Hybrid AI logo" class="brand-logo">
+                <div>
+                    <p class="brand-label">Hybrid AI</p>
+                    <h1>Assistant</h1>
+                </div>
+            </div>
+            <div class="auth-copy">
+                <p class="eyebrow">Secure Access</p>
+                <h1>Professional AI chatbot with protected user access.</h1>
+                <p>Login to ask questions, upload knowledge, use Groq hybrid mode, and continue your personal chat workspace.</p>
+            </div>
+            <div class="auth-preview">
+                <div class="preview-line"></div>
+                <div class="preview-line short"></div>
+                <div class="preview-response">Access granted only after valid credentials.</div>
+            </div>
+        </section>
+
+        <section class="auth-panel" aria-label="{{ 'Signup form' if mode == 'signup' else 'Login form' }}">
+            <div class="auth-heading">
+                <p class="eyebrow">{{ "New Account" if mode == "signup" else "Welcome Back" }}</p>
+                <h2>{{ "Create your account" if mode == "signup" else "Login to continue" }}</h2>
+                <p>{{ "Register once, then access the chatbot securely." if mode == "signup" else "Enter your credentials to access the chatbot." }}</p>
+            </div>
+
+            {% if error %}
+                <div class="auth-error" role="alert">{{ error }}</div>
+            {% endif %}
+
+            <form class="auth-form" method="post">
+                {% if mode == "signup" %}
+                    <label for="name">Full name</label>
+                    <input id="name" name="name" type="text" placeholder="Enter your name" value="{{ form.get('name', '') }}" autocomplete="name" required>
+                {% endif %}
+
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" placeholder="name@example.com" value="{{ form.get('email', '') }}" autocomplete="email" required>
+
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" placeholder="Minimum 8 characters" autocomplete="{{ 'new-password' if mode == 'signup' else 'current-password' }}" minlength="8" required>
+
+                <button class="primary-button auth-submit" type="submit">
+                    {{ "Create account" if mode == "signup" else "Login securely" }}
+                </button>
+            </form>
+
+            <p class="auth-switch">
+                {% if mode == "signup" %}
+                    Already have an account? <a href="{{ url_for('login') }}">Login</a>
+                {% else %}
+                    Need an account? <a href="{{ url_for('signup') }}">Create one</a>
+                {% endif %}
+            </p>
+        </section>
+    </main>
+</body>
+</html>

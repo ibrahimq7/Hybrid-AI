@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hybrid AI Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="{{ url_for('static', filename='logo.svg') }}" alt="Hybrid AI logo" class="brand-logo">
+                <div>
+                    <p class="brand-label">Hybrid AI</p>
+                    <h1>Assistant</h1>
+                </div>
+            </div>
+
+            <button class="primary-button sidebar-new-chat" id="newChatBtn" type="button">New chat</button>
+            <button class="ghost-button sidebar-clear" id="clearChatsBtn" type="button">Delete all chats</button>
+
+            <div class="sidebar-section">
+                <div class="section-heading">Recent chats</div>
+                <div id="chatHistoryList" class="chat-history-list"></div>
+            </div>
+        </aside>
+
+        <main class="workspace">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">Professional AI Chatbot</p>
+                    <h2>Fast Groq-powered answers with text and voice support.</h2>
+                    <div class="hero-tags">
+                        <span>FAQ-first</span>
+                        <span>Groq hybrid mode</span>
+                        <span>Voice ready</span>
+                    </div>
+                </div>
+                <div class="topbar-actions">
+                    <div class="user-chip" title="{{ user.email }}">
+                        <span>{{ user.name[:1].upper() }}</span>
+                        <strong>{{ user.name }}</strong>
+                    </div>
+                    <button class="ghost-button active" id="voiceToggle" type="button" aria-pressed="true">Voice replies on</button>
+                    <button class="ghost-button" id="stopVoiceBtn" type="button" disabled>Stop voice</button>
+                    <form action="{{ url_for('logout') }}" method="post">
+                        <button class="ghost-button" type="submit">Logout</button>
+                    </form>
+                </div>
+            </header>
+
+            <section class="chat-surface">
+                <div id="chatbox" class="chatbox" aria-live="polite"></div>
+
+                <div class="composer-shell">
+                    <form id="chatForm" class="composer">
+                        <label class="sr-only" for="question">Ask a question</label>
+                        <textarea id="question" rows="1" placeholder="Ask by typing, use the mic, upload knowledge, or paste a website link..."></textarea>
+
+                        <div class="composer-toolbar">
+                            <div class="toolbar-left">
+                                <input id="knowledgeFile" type="file" accept=".csv,.json,.txt,.pdf,.docx" hidden>
+                                <button class="icon-button" id="attachBtn" type="button" title="Upload knowledge" aria-label="Upload knowledge">+</button>
+                                <button class="icon-button" id="recordBtn" type="button" title="Record voice" aria-label="Record voice">Mic</button>
+                                <button class="ghost-button hidden" id="confirmVoiceBtn" type="button">Use voice text</button>
+                                <select id="modeSelect" class="mode-select" aria-label="Assistant mode">
+                                    <option value="hybrid">Hybrid mode</option>
+                                    <option value="strict">Strict mode</option>
+                                </select>
+                            </div>
+                            <div class="toolbar-right">
+                                <span class="composer-status" id="assistantStatus">Ready for text or voice input.</span>
+                                <button class="primary-button send-button" id="sendBtn" type="submit">Send</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

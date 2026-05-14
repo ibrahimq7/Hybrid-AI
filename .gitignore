@@ -9,3 +9,8 @@
 
 # Ignore environment variables (passwords/API keys/secrets)
 .env
+.idea/
+.vscode/
+
+# Ignore local registered users
+data/users.json
