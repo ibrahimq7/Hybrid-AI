@@ -42,12 +42,12 @@ The assistant always tries to use your trusted data first. If the answer is not 
 
 #### Dashboard UI
 <p align="center">
-  <img src="screenshots/dashboard-ui.png" width="900"/>
+  <img src="screenshots/dashboard-ui.png" width="700"/>
 </p>
 
 #### Chat History Sidebar
 <p align="center">
-  <img src="screenshots/chat-history.png" width="700"/>
+  <img src="screenshots/chat-history.png" width="300"/>
 </p>
 
 #### AI Response View
