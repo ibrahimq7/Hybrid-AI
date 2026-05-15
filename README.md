@@ -155,6 +155,8 @@ Hybrid_AI/
 |-- faq_data.csv
 |-- requirements.txt
 |-- Procfile
+|-- vercel.json
+|-- .vercelignore
 `-- .env.example
 ```
 
@@ -216,6 +218,10 @@ http://127.0.0.1:5000
 
 This project is structured to be deployment-friendly.
 
+### Vercel
+
+The project includes `vercel.json` so Vercel can route requests to `app.py`. The dependency list is intentionally Linux-safe and does not include Windows-only packages such as `pywin32`, `pypiwin32`, or desktop-only voice packages.
+
 ### Environment variables
 
 Set these in your deployment platform:
@@ -235,6 +241,7 @@ A `Procfile` is included for deployment workflows that support it.
 - Use a strong `SESSION_SECRET` in production.
 - Keep `.env`, `data/users.json`, and any private knowledge files out of Git.
 - Serve the app over `HTTPS` in production for the best browser voice support.
+- For long-term production use, replace local JSON user storage with a hosted database.
 
 ## API Endpoints
 
