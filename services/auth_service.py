@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import json
+import os
 import re
+import tempfile
 import uuid
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -11,7 +13,12 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATA_DIR = BASE_DIR / "data"
+IS_SERVERLESS = bool(os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"))
+DATA_DIR = (
+    Path(os.getenv("HYBRID_AI_RUNTIME_DIR", str(Path(tempfile.gettempdir()) / "hybrid_ai")))
+    if IS_SERVERLESS
+    else BASE_DIR / "data"
+)
 USERS_FILE = DATA_DIR / "users.json"
 EMAIL_PATTERN = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
@@ -26,7 +33,7 @@ class AuthUser:
 class AuthService:
     def __init__(self, users_file: Path = USERS_FILE):
         self.users_file = users_file
-        DATA_DIR.mkdir(exist_ok=True)
+        self.users_file.parent.mkdir(parents=True, exist_ok=True)
         if not self.users_file.exists():
             self._save_users([])
 

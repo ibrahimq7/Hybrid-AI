@@ -3,7 +3,10 @@ from __future__ import annotations
 import csv
 import io
 import json
+import os
 import re
+import shutil
+import tempfile
 import uuid
 import zipfile
 from dataclasses import asdict, dataclass
@@ -28,9 +31,16 @@ except ImportError:  # pragma: no cover - optional dependency
 
 
 BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "data"
+PROJECT_DATA_DIR = BASE_DIR / "data"
+IS_SERVERLESS = bool(os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"))
+DATA_DIR = (
+    Path(os.getenv("HYBRID_AI_RUNTIME_DIR", str(Path(tempfile.gettempdir()) / "hybrid_ai")))
+    if IS_SERVERLESS
+    else PROJECT_DATA_DIR
+)
 FAQ_FILE = BASE_DIR / "faq_data.csv"
 STORE_FILE = DATA_DIR / "knowledge_store.json"
+BUNDLED_STORE_FILE = PROJECT_DATA_DIR / "knowledge_store.json"
 UPLOADED_FILE_TYPES = {"csv", "json", "txt", "pdf", "docx"}
 TERM_SYNONYMS = {
     "pay": {"pay", "payment", "payments", "paid", "payout", "salary", "wage", "billing", "invoice"},
@@ -105,10 +115,15 @@ class KnowledgeBase:
         self.reload()
 
     def reload(self) -> None:
-        DATA_DIR.mkdir(exist_ok=True)
+        self._prepare_store_file()
         self.faq_entries = load_csv_data(str(self.faq_file))
         self.extra_sources = self._load_store()
         self._rebuild_index()
+
+    def _prepare_store_file(self) -> None:
+        self.store_file.parent.mkdir(parents=True, exist_ok=True)
+        if IS_SERVERLESS and not self.store_file.exists() and BUNDLED_STORE_FILE.exists():
+            shutil.copyfile(BUNDLED_STORE_FILE, self.store_file)
 
     def _load_store(self) -> list[dict]:
         if not self.store_file.exists():
@@ -126,11 +141,6 @@ class KnowledgeBase:
         if payload is None:
             raise ValueError("knowledge_store.json could not be decoded as valid JSON.")
 
-        # Normalize back to UTF-8 so future app launches stay stable.
-        self.store_file.write_text(
-            json.dumps(payload, indent=2, ensure_ascii=True),
-            encoding="utf-8",
-        )
         return payload.get("sources", [])
 
     def _save_store(self) -> None:

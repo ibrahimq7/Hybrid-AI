@@ -152,6 +152,7 @@ Hybrid_AI/
 |-- data_loader.py
 |-- knowledge_base.py
 |-- rag_engine.py
+|-- run_server.py
 |-- faq_data.csv
 |-- requirements.txt
 |-- Procfile
@@ -204,8 +205,16 @@ SESSION_SECRET=replace_with_a_long_random_secret
 
 ### 5. Run the application
 
+Development mode:
+
 ```bash
 python app.py
+```
+
+Production-style local mode on Windows, Linux, or macOS:
+
+```bash
+python run_server.py
 ```
 
 Open the app in your browser:
@@ -218,9 +227,21 @@ http://127.0.0.1:5000
 
 This project is structured to be deployment-friendly.
 
+### Cross-platform support
+
+The project is designed to run on Windows, Linux, and macOS. It uses `pathlib` and Python's temp directory handling for portable file paths, and `waitress` is used as a cross-platform production server.
+
+Use the same dependency command on every operating system:
+
+```bash
+pip install -r requirements.txt
+```
+
 ### Vercel
 
 The project includes `vercel.json` so Vercel can route requests to `app.py`. The dependency list is intentionally Linux-safe and does not include Windows-only packages such as `pywin32`, `pypiwin32`, or desktop-only voice packages.
+
+On Vercel, runtime JSON files are written to the serverless temp directory instead of the deployed project folder. This prevents serverless function crashes caused by read-only filesystem writes. For permanent production login accounts, connect a hosted database such as PostgreSQL, MySQL, MongoDB, or Supabase.
 
 ### Environment variables
 
