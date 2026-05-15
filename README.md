@@ -26,31 +26,39 @@ The assistant always tries to use your trusted data first. If the answer is not 
 
 ### Authentication
 
-**Login Page**
+#### Login Page
+<p align="center">
+  <img src="screenshots/login-page.png" width="700"/>
+</p>
 
-![Login Page](screenshots/login-page.png)
+#### Signup Page
+<p align="center">
+  <img src="screenshots/signup-page.png" width="700"/>
+</p>
 
-**Signup Page**
-
-![Signup Page](screenshots/signup-page.png)
+---
 
 ### Main Interface
 
-**Dashboard UI**
+#### Dashboard UI
+<p align="center">
+  <img src="screenshots/dashboard-ui.png" width="900"/>
+</p>
 
-![Dashboard UI](screenshots/dashboard-ui.png)
+#### Chat History Sidebar
+<p align="center">
+  <img src="screenshots/chat-history.png" width="700"/>
+</p>
 
-**Chat History Sidebar**
+#### AI Response View
+<p align="center">
+  <img src="screenshots/ai-response.png" width="700"/>
+</p>
 
-![Chat History Sidebar](screenshots/chat-history.png)
-
-**AI Response View**
-
-![AI Response View](screenshots/ai-response.png)
-
-**Mode Selection**
-
-![Mode Selection](screenshots/model-selection.png)
+#### Mode Selection
+<p align="center">
+  <img src="screenshots/model-selection.png" width="500"/>
+</p>
 
 ## Key Features
 
